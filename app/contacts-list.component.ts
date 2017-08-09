@@ -6,8 +6,8 @@ import {Contact} from "./contact.interface";
     template: `
         <ul>
         
-           <li *ngFor="let contact of contacts" class="item" [class.active]="selected==contact">
-               <a (click)="onSelect(contact)">{{contact.firstName}} {{contact.lastName | uppercase}}</a>
+           <li highlight="" *ngFor="let contact of contacts" class="item" [class.active]="selected==contact">
+               <a  (click)="onSelect(contact)">{{contact.firstName}} {{contact.lastName | payUppercase}}</a>
                <a (click)="remove(contact)" class="remove" title="Remove"><span class="glyphicon glyphicon-remove-sign"></span></a>
            </li>
          
@@ -16,7 +16,8 @@ import {Contact} from "./contact.interface";
         </ul>
      
 
-      `
+      `,
+    //providers: [ContactsService]
 })
 export class ContactsListComponent implements OnInit {
 
@@ -44,7 +45,7 @@ export class ContactsListComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.contacts = this.contactsService.getAll()
+       // this.contacts = this.contactsService.getAll()
     }
 
 }

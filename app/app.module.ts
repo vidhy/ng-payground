@@ -7,13 +7,18 @@ import {ContactDetailsComponent} from "./contact-details.component";
 import {ContactsListComponent} from "./contacts-list.component";
 import {ContactsService} from "./contacts.service";
 import {FormsModule} from "@angular/forms";
+import {LoggerService} from "./logger.service";
+import {ContactsLoggerService} from "./contacts-logger.service";
+import {HighlightDirective} from "./highlight.directive";
+import {PayUppercasePipe} from "./payUppercase.pipe";
 
 
 @NgModule({
     imports: [BrowserModule, FormsModule],
-    declarations: [AppComponent, ContactDetailsComponent, ContactsListComponent],
+    declarations: [AppComponent, ContactDetailsComponent, ContactsListComponent, HighlightDirective, PayUppercasePipe],
     bootstrap: [AppComponent],
-    providers: [ContactsService]
+    providers: [ContactsService, { provide: LoggerService, useClass: ContactsLoggerService}]
+
 
 })
 export class AppModule {
