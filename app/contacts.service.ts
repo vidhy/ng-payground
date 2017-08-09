@@ -6,6 +6,8 @@ import {Contact} from "./contact.interface";
 @Injectable()
 export class ContactsService {
     private static _contactId = 5;
+
+
     private CONTACTS: Contact[] = [
         {id: 1, firstName: "Max", lastName: "Smith", email: "max@gmail.com"},
         {id: 2, firstName: "Chris", lastName: "Raches", email: "chris@gmail.com"},
@@ -16,5 +18,22 @@ export class ContactsService {
 
     public getAll(): Contact[] {
         return this.CONTACTS;
+    }
+
+    public remove(id: number) {
+        let ind = this.findIndexById(id);
+        if( ind>=0 )
+            this.CONTACTS.splice(ind, 1);
+    }
+
+    private findById(contactId: number): Contact {
+        return this.CONTACTS.find(row => row.id == contactId )
+    }
+
+    private findIndexById(contactId: number) {
+        let contact = this.findById(contactId);
+        if( !contact ) return -1;
+
+        return this.CONTACTS.indexOf(contact);
     }
 }
