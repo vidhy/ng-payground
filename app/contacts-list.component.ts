@@ -1,4 +1,4 @@
-import {Component, OnInit, Output, EventEmitter} from "@angular/core";
+import {Component, OnInit, Output, EventEmitter, Input} from "@angular/core";
 import {ContactsService} from "./contacts.service";
 import {Contact} from "./contact.interface";
 @Component({
@@ -22,9 +22,9 @@ import {Contact} from "./contact.interface";
 export class ContactsListComponent implements OnInit {
 
 
-    @Output() contactSelected = new EventEmitter();
+    @Input() selected:Contact;
+    @Output() selectedChange = new EventEmitter();
 
-    public selected: Contact;
     public contacts: Contact[];
 
     constructor(private contactsService: ContactsService) {
@@ -33,19 +33,28 @@ export class ContactsListComponent implements OnInit {
 
     onSelect(contact: Contact) {
         this.selected = contact;
-        this.contactSelected.emit(contact)
+        this.selectedChange.emit(contact)
 
     }
 
 
     remove(contact: Contact) {
-        this.contactsService.remove(contact.id);
-        this.contactSelected.emit(undefined);
+        this.contactsService.remove(contact.id).subscribe(() => {
+            this.getAllContacts()
+        });
+        this.selectedChange.emit(undefined);
 
     }
 
+
+    getAllContacts() {
+        this.contactsService.getAll().subscribe((contacts) => {
+            this.contacts = contacts;
+        })
+    }
+
     ngOnInit() {
-       // this.contacts = this.contactsService.getAll()
+        this.getAllContacts();
     }
 
 }

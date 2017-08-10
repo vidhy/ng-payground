@@ -1,6 +1,11 @@
 import {Injectable} from "@angular/core";
 import {Contact} from "./contact.interface";
 import {LoggerService} from "./logger.service";
+import {Http} from "@angular/http";
+
+
+const API_ENDPOINT = "http://localhost:3005";
+
 
 
 
@@ -9,7 +14,7 @@ export class ContactsService {
     private static _contactId = 5;
 
 
-    constructor(private loggerService:LoggerService) {
+    constructor(private loggerService:LoggerService, private http:Http) {
 
     }
 
@@ -22,14 +27,15 @@ export class ContactsService {
     // ];
 
     public getAll() {
-        // this.loggerService.log('Contacts loaded');
-        // return this.CONTACTS;
+        return this.http.get(`${API_ENDPOINT}/contacts`).map((response) => {
+            return response.json() as Contact[];
+        })
     }
 
     public remove(id: number) {
-        // let ind = this.findIndexById(id);
-        // if( ind>=0 )
-        //     this.CONTACTS.splice(ind, 1);
+        return this.http.delete(`${API_ENDPOINT}/contacts/${id}`).map((response) => {
+            return response.json() as Contact;
+        })
     }
 
 

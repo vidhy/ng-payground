@@ -10,8 +10,9 @@ import 'rxjs/add/operator/debounceTime'
     selector: 'my-app',
     template: `
         <h6>Today's date: {{ now | async | date: 'mediumTime' | payUppercase }}</h6>
-        <contacts-list (contactSelected)="selectedContact = $event"></contacts-list>
-        <contact-details [contact]="selectedContact"></contact-details>
+        <contacts-list [(selected)]="selected"></contacts-list>
+         <a id="add" href="#" class="text-danger" (click)="onAdd()"><span class="glyphicon glyphicon-plus"></span>Add</a>
+        <contact-details [(contact)]="selected"></contact-details>
         
        
 
@@ -22,11 +23,14 @@ import 'rxjs/add/operator/debounceTime'
 export class AppComponent {
 
 
-
-    public now:Date;
-    public selectedContact: Contact;
+    public now: Date;
+    public selected: Contact;
 
     public contacts: Contact[];
+
+    onAdd() {
+        this.selected = {id: null ,firstName: "", lastName: "", email: ""};
+    }
 
     constructor() {
         this.now = Observable.create((observer) => {
@@ -37,13 +41,6 @@ export class AppComponent {
 
 
     }
-
-
-
-
-
-
-
 
 
 }

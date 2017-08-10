@@ -11,10 +11,11 @@ import {LoggerService} from "./logger.service";
 import {ContactsLoggerService} from "./contacts-logger.service";
 import {HighlightDirective} from "./highlight.directive";
 import {PayUppercasePipe} from "./payUppercase.pipe";
+import {HttpModule} from "@angular/http";
 
 
 @NgModule({
-    imports: [BrowserModule, FormsModule],
+    imports: [BrowserModule, FormsModule, HttpModule],
     declarations: [AppComponent, ContactDetailsComponent, ContactsListComponent, HighlightDirective, PayUppercasePipe],
     bootstrap: [AppComponent],
     providers: [ContactsService, { provide: LoggerService, useClass: ContactsLoggerService}]
